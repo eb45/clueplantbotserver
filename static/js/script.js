@@ -295,12 +295,31 @@ let panels = {
       let panelTemplate = loadPanelTemplate(panelId, 'onboard-buttons');
       for (let i = 0; i < 4; i++) {
         let buttonTemplate = document.querySelector("#templates > .roundbutton").cloneNode(true);
-        buttonTemplate.id = "button_" + (i + 1);
         var but = ["F", "B", "L", "R"];
+        buttonTemplate.id = "button_" + but[i];
         buttonTemplate.querySelector(".text").innerHTML = but[i];
         panelTemplate.querySelector(".content").appendChild(buttonTemplate);
       }
-
+        panelTemplate.querySelector("#button_F").onclick = function() {
+        let button = this;
+        button.disabled = true;
+        moveRobot(1, 0, 0, 0, function() {button.disabled = false;})
+        }
+        panelTemplate.querySelector("#button_B").onclick = function() {
+        let button = this;
+        button.disabled = true;
+        moveRobot(0, 1, 0, 0, function() {button.disabled = false;})
+        }
+        panelTemplate.querySelector("#button_L").onclick = function() {
+        let button = this;
+        button.disabled = true;
+        moveRobot(0, 0, 1, 0, function() {button.disabled = false;})
+        }
+        panelTemplate.querySelector("#button_R").onclick = function() {
+        let button = this;
+        button.disabled = true;
+        moveRobot(0, 0, 0, 1, function() {button.disabled = false;})
+        }
       /*
       let panelTemplate = loadPanelTemplate(panelId, 'forward-button');
       panelTemplate.querySelector(".content .button").onclick = function() {
