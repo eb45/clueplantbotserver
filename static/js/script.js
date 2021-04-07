@@ -296,7 +296,8 @@ let panels = {
       for (let i = 0; i < 4; i++) {
         let buttonTemplate = document.querySelector("#templates > .roundbutton").cloneNode(true);
         buttonTemplate.id = "button_" + (i + 1);
-        buttonTemplate.querySelector(".text").innerHTML = String.fromCharCode(65 + i);
+        var but = ["F", "B", "L", "R"];
+        buttonTemplate.querySelector(".text").innerHTML = but[i];
         panelTemplate.querySelector(".content").appendChild(buttonTemplate);
       }
 
