@@ -292,13 +292,21 @@ let panels = {
     characteristicId: '0221',
     panelType: "custom",
     create: function(panelId) {
+      let panelTemplate = loadPanelTemplate(panelId, 'onboard-buttons');
+      for (let i = 0; i < 4; i++) {
+        let buttonTemplate = document.querySelector("#templates > .roundbutton").cloneNode(true);
+        buttonTemplate.id = "button_" + (i + 1);
+        buttonTemplate.querySelector(".text").innerHTML = String.fromCharCode(65 + i);
+        panelTemplate.querySelector(".content").appendChild(buttonTemplate);
+      }
+
+      /*
       let panelTemplate = loadPanelTemplate(panelId, 'forward-button');
       panelTemplate.querySelector(".content .button").onclick = function() {
         let button = this;
         button.disabled = true;
         moveRobot(1, 0, 0, 0, function() {button.disabled = false;})
-
-      }
+        */
       this.packetSequence = this.structure;
     },
     structure: ['Uint16', 'Uint16', 'Uint16', 'Uint16'],
