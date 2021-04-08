@@ -332,6 +332,34 @@ let panels = {
     structure: ['Uint16', 'Uint16', 'Uint16', 'Uint16'],
     properties: ['write'],
   },
+  exploration: {
+    serviceId: '0550',
+    characteristicId: '0551',
+    panelType: "custom",
+    create: function(panelId) {
+      let panelTemplate = loadPanelTemplate(panelId, 'onboard-buttons');
+      for (let i = 0; i < 2; i++) {
+        let buttonTemplate = document.querySelector("#templates > .roundbutton").cloneNode(true);
+        var but = ["go","stop"];
+        buttonTemplate.id = "button_" + but[i];
+        buttonTemplate.querySelector(".text").innerHTML = but[i];
+        panelTemplate.querySelector(".content").appendChild(buttonTemplate);
+      }
+        panelTemplate.querySelector("#button_go").onclick = function() {
+        let button = this;
+        button.disabled = true;
+        moveRobot(1, 0, 0, 0, function() {button.disabled = false;})
+        }
+        panelTemplate.querySelector("#button_stop").onclick = function() {
+        let button = this;
+        button.disabled = true;
+        moveRobot(0, 1, 0, 0, function() {button.disabled = false;})
+        }
+      this.packetSequence = this.structure;
+    },
+    structure: ['Uint16', 'Uint16'],
+    properties: ['write'],
+  },
   neopixel: {
     serviceId: '0900',
     characteristicId: '0903',
