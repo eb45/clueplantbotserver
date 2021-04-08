@@ -348,12 +348,12 @@ let panels = {
         panelTemplate.querySelector("#button_go").onclick = function() {
         let button = this;
         button.disabled = true;
-        moveRobot(1, 0, 0, 0, function() {button.disabled = false;})
+        explore(1, 0, function() {button.disabled = false;})
         }
         panelTemplate.querySelector("#button_stop").onclick = function() {
         let button = this;
         button.disabled = true;
-        moveRobot(0, 1, 0, 0, function() {button.disabled = false;})
+        explore(0, 1, function() {button.disabled = false;})
         }
       this.packetSequence = this.structure;
     },
@@ -402,6 +402,17 @@ function moveRobot(forward, backward, left, right, callback) {
 
   let value = encodePacket('drive', [forward, backward, left, right]);
   panels.drive.characteristic.writeValue(value)
+    .catch(error => {console.log(error);})
+    .then(callback);
+}
+
+function explore(go, stop, callback) {
+  if (callback === undefined) {
+    callback = function() {};
+  }
+
+  let value = encodePacket('exploration', [go, stop]);
+  panels.exploration.characteristic.writeValue(value)
     .catch(error => {console.log(error);})
     .then(callback);
 }
